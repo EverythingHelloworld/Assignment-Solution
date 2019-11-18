@@ -1,5 +1,7 @@
 package ie.lyit.bank;
 
+import java.text.DecimalFormat;
+
 import ie.lyit.bank.Date;
 import ie.lyit.bank.Name;
 
@@ -84,11 +86,14 @@ public class Employee extends Person {
 	}
 	
 	/*Calculates the employee's weekly wage minus the tax they owe. An IllegalArgumentException is thrown if
-	the percentage passed in is less than 0 or greater than 100*/
+	the percentage passed in is less than 1 or greater than 100*/
 	public double calculateWage(double taxPercentage) throws IllegalArgumentException {
-		if(taxPercentage < 0 || taxPercentage > 100)
+		if(taxPercentage < 1 || taxPercentage > 100)
 			throw new IllegalArgumentException("Tax percentage must be between 0 and 100");
 		double weeklyWage = salary/12;
-		return weeklyWage - (weeklyWage * (taxPercentage/100));
+		weeklyWage = weeklyWage - (weeklyWage * (taxPercentage/100));
+		//Formats the return value to two decimal places
+		DecimalFormat df = new DecimalFormat("###.##");
+	    return Double.valueOf(df.format(weeklyWage));
 	}
 }
